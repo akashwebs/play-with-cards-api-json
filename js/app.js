@@ -1,12 +1,12 @@
 const cardContainer = document.getElementById('card-container');
 
 
-
+// serach button
 const serachButton = () => {
     const input = document.getElementById('input-value')
     const errorMsg = document.getElementById('error')
     const inputValue = parseInt(input.value);
-
+    // search input validation
     if (isNaN(inputValue) || inputValue == '') {
         errorMsg.innerText = 'Please give a number'
         errorMsg.className = 'text-danger' + ' text-center'
@@ -14,7 +14,9 @@ const serachButton = () => {
     } else if (inputValue < 0) {
         errorMsg.innerText = 'plesae give a positive number';
         cardContainer.innerHTML = '';
+
     } else {
+        // json respons for serach
         fetch(`https://deckofcardsapi.com/api/deck/new/draw/?count=${inputValue}`)
             .then(res => res.json())
             .then(data => displayCards(data))
@@ -26,11 +28,15 @@ const serachButton = () => {
 
 }
 
+
+// display data when serach
 const displayCards = cards => {
     const totalCards = cards.cards;
     cardContainer.innerHTML = '';
     for (const card of totalCards) {
         const div = document.createElement('div');
+
+        // cereate data when serach
         div.innerHTML = `
         <div class="p-3 border bg-light">
         <div class="card">
@@ -51,13 +57,15 @@ const displayCards = cards => {
     }
 }
 
+
+// get uniqe code form see details button
 const getCode = code => {
     const title = document.getElementById('exampleModalLabel');
     const detailsBody = document.getElementById('card-body');
     title.innerText = ""
     detailsBody.innerHTML = ""
 
-
+    // 
     fetch('https://deckofcardsapi.com/api/deck/new/draw/?count=52')
         .then(res => res.json())
         .then(data => {
@@ -66,7 +74,7 @@ const getCode = code => {
             console.log(findUniqCard);
 
             title.innerText = `${findUniqCard.value} of ${findUniqCard.suit}`;
-
+            // add inner text in modal see all data
             detailsBody.innerHTML = `
             <p> Card Suit: ${findUniqCard.suit} </p>
             <p>card code: ${findUniqCard.code}</p>
