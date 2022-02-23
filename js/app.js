@@ -52,7 +52,10 @@ const displayCards = cards => {
 }
 
 const getCode = code => {
-
+    const title = document.getElementById('exampleModalLabel');
+    const detailsBody = document.getElementById('card-body');
+    title.innerText = ""
+    detailsBody.innerHTML = ""
 
 
     fetch('https://deckofcardsapi.com/api/deck/new/draw/?count=52')
@@ -61,8 +64,14 @@ const getCode = code => {
             const cardAll = data.cards;
             const findUniqCard = cardAll.find(card => card.code == code)
             console.log(findUniqCard);
-            const title = document.getElementById('exampleModalLabel');
-            title.innerText = `Card Name: ${findUniqCard.suit}`;
+
+            title.innerText = `${findUniqCard.value} of ${findUniqCard.suit}`;
+
+            detailsBody.innerHTML = `
+            <p> Card Suit: ${findUniqCard.suit} </p>
+            <p>card code: ${findUniqCard.code}</p>
+            <h4> Card Value: ${findUniqCard.value} </h4>
+            `
 
 
 
